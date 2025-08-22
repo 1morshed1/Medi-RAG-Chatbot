@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🔍 AI Medical Chatbot</title>
+    <!-- Use Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CSS for sleek styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <!-- Apply a dark background and light text to the body -->
+  <body
+    class="bg-gray-900 text-gray-100 p-8 min-h-screen flex items-center justify-center"
+  >
+    <div
+      class="w-full max-w-2xl bg-gray-800 p-6 rounded-3xl shadow-2xl border-2 border-gray-700"
+    >
+      <!-- Chatbot Header -->
+      <h1 class="text-3xl font-bold text-center text-teal-400 mb-6">
+        <span class="text-gray-400">🔍</span> MEDI_RAG Chatbot
+      </h1>
+
+      <!-- Error message section -->
+      <!-- The template engine will handle this block -->
+      {% if error %}
+      <p class="error text-red-400 text-center mb-4">{{ error }}</p>
+      {% endif %}
+
+      <!-- Chat messages container with fixed height and scrolling -->
+      <div
+        id="chat-box"
+        class="h-96 overflow-y-auto space-y-4 pr-2 scrollbar-thumb-teal-500 scrollbar-track-transparent scrollbar-thin"
+      >
+        <!-- The template engine will loop through messages here -->
+        {% for msg in messages %}
+        <div
+          class="message p-4 rounded-xl shadow-lg {% if msg.role == 'user' %}bg-blue-600 text-white ml-auto max-w-[80%]{% else %}bg-gray-700 text-gray-200 mr-auto max-w-[80%]{% endif %}"
+        >
+          <strong class="font-semibold">{{ msg.role|capitalize }}:</strong
+          ><br />
+          {{ msg.content | safe | nl2br }}
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Form for user input -->
+      <form method="post" action="{{ url_for('index') }}" class="mt-6">
+        <textarea
+          name="prompt"
+          placeholder="Ask a medical question..."
+          required
+          class="w-full h-12 p-3 text-base text-gray-100 bg-gray-700 rounded-xl border-2 border-gray-600 focus:outline-none focus:border-teal-400 transition-colors"
+        ></textarea>
+        <br />
+        <button
+          type="submit"
+          class="w-full mt-3 py-3 rounded-xl font-semibold bg-teal-500 hover:bg-teal-600 transition-colors shadow-lg"
+        >
+          Send
+        </button>
+      </form>
+
+      <!-- Form for clearing the chat -->
+      <form method="get" action="{{ url_for('clear') }}" class="mt-3">
+        <button
+          type="submit"
+          class="w-full py-3 rounded-xl font-semibold bg-gray-600 hover:bg-gray-700 transition-colors shadow-lg"
+        >
+          Clear Chat
+        </button>
+      </form>
+    </div>
+  </body>
+</html>
