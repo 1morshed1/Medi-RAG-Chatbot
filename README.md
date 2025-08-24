@@ -255,6 +255,11 @@ python -m pytest tests/ -v
 - "Explain the side effects of aspirin"
 - "What is the recommended dosage for hypertension medication?"
 
+### Demo
+
+![Demo1](img/demo1.png)
+![Demo2](img/demo2.png)
+
 ## 🤝 Contributing
 
 1. Fork the repository
